@@ -8,6 +8,11 @@
 #include "tiles/Tile.hpp"
 #include "tiles/TileUtils.hpp"
 #include "settings/Random.hpp"
+#include "settings/GlobalFlags.hpp"
+#if SZM_OUTPUT_COLORS
+#include "settings/OutputModifier.hpp"
+#endif
+
 #include <array>
 #include <sstream>
 #include <iomanip>
@@ -109,6 +114,12 @@ namespace szm {
                     tileSet_[i + 22] = new TDTile{Tiles::Sou5};
                 }
             }
+
+            int i = 0;
+            for (TDTile* tile: tileSet_) {
+                tile->setId(i);
+                i++;
+            }
         }
 
         void shuffle()
@@ -143,14 +154,32 @@ namespace szm {
                 j = (deadWallIdx + i) % tileCount;
                 tileSet_[j]->setTileState(TileStates::Wanpai);
 
-                if (i == 5)
+                if (i == 4)
                     tileSet_[j]->setTileState(TileStates::DoraIndicator);
-                if (i == 6)
+                if (i == 5)
                     tileSet_[j]->setTileState(TileStates::UraDoraIndicator);
 
 //                getTile((deadWallIdx + i) % tileCount).setTileState(TileStates::Wanpai);
                 i++;
             }
+
+            // TODO: Add customization of dice throwing and wall splitting
+            wallShift_ = (randomEngine() % 12);
+            shiftTiles(tileCount - deadWallIdx - deadWallTileCount - wallShift_);
+        }
+
+        void shiftTiles(int shift)
+        {
+            std::array<TDTile*, tileCount> arr;
+
+            int i = 0;
+            for (TDTile* tile : tileSet_) {
+                arr[(i + shift) % tileCount] = tile;
+
+                i++;
+            }
+
+            tileSet_ = std::move(arr);
         }
 
         void updateDora()
@@ -196,6 +225,18 @@ namespace szm {
             }
         }
 
+        TDTile grabTile()
+        {
+            // TODO: Implement ryuukyoku conditions.
+
+            auto tile = getTilePointer(tileOffset_);
+            tileOffset_++;
+
+            tile->setTileState(TileStates::Tehai);
+
+            return *tile;
+        }
+
         std::string tilesToString() {
             std::stringstream ss;
 
@@ -215,14 +256,34 @@ namespace szm {
         bool useAkaDora_ = true; /// Red dora.
         std::array<TDTile*, tileCount> tileSet_;
         std::vector<TDTile*> deadWallTileSet_;
+
+        int wallShift_ = 0;
+        int tileOffset_ = 0;
     };
 
     template<Languages TLanguage, int TTileCount>
     std::ostream& operator << (std::ostream &os, const Table<TLanguage, TTileCount>& table)
     {
         for (int i = 0; i < table.tileCount; i++) {
-            os << std::setfill(' ') << std::setw(3) << i << ": " << table.getTile(i).toString() << std::endl;
+            auto tile = table.getTile(i);
+
+#if SZM_OUTPUT_COLORS
+            os << Modifier(ModifierCode::FG_DEFAULT) << Modifier(ModifierCode::BG_DEFAULT);
+
+            if (tile.hasTileState(TileStates::Wanpai))
+                os << Modifier(ModifierCode::BG_YELLOW) << Modifier(ModifierCode::FG_BLACK);
+            if (tile.hasTileState(TileStates::Tehai))
+                os << Modifier(ModifierCode::BG_GREEN)  << Modifier(ModifierCode::FG_BLACK);
+            if (tile.hasTileState(TileStates::UraDora) || tile.hasTileState(TileStates::Dora))
+                os << Modifier(ModifierCode::FG_RED);
+#endif
+
+            os << std::setfill('0') << std::setw(3) << i << ": " << tile.toString() << std::endl;
         }
+
+#if SZM_OUTPUT_COLORS
+        os << Modifier(ModifierCode::FG_DEFAULT) << Modifier(ModifierCode::BG_DEFAULT);
+#endif
 
         return os;
     }

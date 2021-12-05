@@ -63,11 +63,13 @@ namespace szm {
     enum class TileStates {
         Closed,
         Open,
-        Wanpai, // Dead wall
+        Wanpai, /// Dead wall
         Dora,
         UraDora,
         DoraIndicator,
-        UraDoraIndicator
+        UraDoraIndicator,
+        Tehai, /// Tile in hand
+        Sutehai /// Discarded tile
     };
 }
 

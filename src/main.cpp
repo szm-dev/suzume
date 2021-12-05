@@ -22,6 +22,7 @@ int main()
     std::cout << hatu << std::endl;
 
     auto table = szm::Table<szm::Languages::Japanese>{};
+//    auto table = szm::Table<szm::Languages::English>{};
     std::cout << table << std::endl;
     std::cout << std::endl;
 
@@ -29,7 +30,15 @@ int main()
     table.makeDeadWall();
     table.updateDora();
 
+    auto tile = table.grabTile();
+
     std::cout << table << std::endl;
+
+    std::cout << std::endl;
+
+    std::cout << "手牌: " << tile << std::endl;
+
+//    std::cout << "\033[1;31mbold red text\033[0m\n";
 
 //    auto tableNoAkaDora = szm::Table<>{false};
 //    std::cout << tableNoAkaDora.tilesToString() << std::endl;

@@ -9,10 +9,15 @@
 #include <utility>
 #include <sstream>
 #include <vector>
+#include <iomanip>
 
 #include "TilesEnum.hpp"
 #include "settings/Languages.hpp"
 #include "settings/LocalizationUtils.hpp"
+#include "settings/GlobalFlags.hpp"
+#if SZM_OUTPUT_COLORS
+#include "settings/OutputModifier.hpp"
+#endif
 
 namespace szm {
     template<Languages TLanguage = Languages::English>
@@ -53,7 +58,7 @@ namespace szm {
 
         const TDTileStateVector& getTileStates() const;
 
-        bool hasTileState(const TileStates state);
+        bool hasTileState(const TileStates state) const;
 
         void setTileState(const TileStates state);
 
@@ -74,6 +79,10 @@ namespace szm {
 
         std::string getTileStateName() const;
 
+        int getId() const;
+
+        void setId(int id = 0, int maxTiles = 136);
+
         unsigned int count() const
         {
             return 1;
@@ -82,6 +91,7 @@ namespace szm {
         std::string name_;
         Tiles tile_ = Tiles::Haku;
         TDTileStateVector states_ = {TileStates::Closed};
+        int id_ = -1;
     };
 
     template<Languages TLanguage>
@@ -97,7 +107,7 @@ namespace szm {
     }
 
     template<Languages TLanguage>
-    bool Tile<TLanguage>::hasTileState(const TileStates state)
+    bool Tile<TLanguage>::hasTileState(const TileStates state) const
     {
         return (std::find(states_.begin(), states_.end(), state) != states_.end());
     }
@@ -151,13 +161,46 @@ namespace szm {
         std::stringstream ss;
         ss << getTileName() << " | " << getTileStateName();
 
+        ss << " (#" << std::setfill('0') << std::setw(3) << getId() << ")";
+
         return ss.str();
+    }
+
+    template<Languages TLanguage>
+    int Tile<TLanguage>::getId() const
+    {
+        return id_;
+    }
+
+    template<Languages TLanguage>
+    void Tile<TLanguage>::setId(int id, int maxTiles)
+    {
+        id = id < 0 ? 0 : id;
+        id = id % maxTiles;
+
+        id_ = id;
     }
 
     template<Languages TLanguage>
     std::ostream& operator << (std::ostream &os, const Tile<TLanguage>& tile)
     {
-        return (os << tile.toString());
+#if SZM_OUTPUT_COLORS
+        os << Modifier(ModifierCode::FG_DEFAULT) << Modifier(ModifierCode::BG_DEFAULT);
+
+        if (tile.hasTileState(TileStates::Wanpai))
+            os << Modifier(ModifierCode::BG_YELLOW) << Modifier(ModifierCode::FG_BLACK);
+        if (tile.hasTileState(TileStates::Tehai))
+            os << Modifier(ModifierCode::BG_GREEN)  << Modifier(ModifierCode::FG_BLACK);
+        if (tile.hasTileState(TileStates::UraDora) || tile.hasTileState(TileStates::Dora))
+            os << Modifier(ModifierCode::FG_RED);
+#endif
+
+        os << tile.toString();
+
+#if SZM_OUTPUT_COLORS
+        os << Modifier(ModifierCode::FG_DEFAULT) << Modifier(ModifierCode::BG_DEFAULT);
+#endif
+        return os;
     }
 }
 
