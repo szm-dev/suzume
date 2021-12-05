@@ -9,7 +9,6 @@
 
 int main()
 {
-    std::cout << "Hello, World!" << std::endl;
     std::cout << szm::localize<szm::Tiles::Chun>() << std::endl;
     std::cout << szm::localize<szm::Languages::Japanese>(szm::Tiles::Chun) << std::endl;
     std::cout << szm::localize<szm::Languages::JapanesePhonetic>(szm::Tiles::Sha) << std::endl;
