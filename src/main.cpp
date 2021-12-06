@@ -29,19 +29,43 @@ int main()
     table.shuffle();
     table.makeDeadWall();
     table.updateDora();
+    table.addPlayers();
+    table.dealTiles();
 
-    auto tile = table.grabTile();
+    auto toncha = table.getPlayer(0);
+    auto nancha = table.getPlayer(1);
+    auto shacha = table.getPlayer(2);
+    auto peicha = table.getPlayer(3);
 
-    std::cout << table << std::endl;
+    std::cout << "Yamahai: " << table.countYamahai() << std::endl;
+    std::cout << "Wanpai: " << table.countWanpai() << std::endl;
+    std::cout << "Kawahai: " << table.countKawahai() << std::endl;
+    std::cout << "Tehai: " << table.countTehai() << std::endl;
 
-    std::cout << std::endl;
+//    auto tile = table.grabTile(szm::TileOrigins::Toncha);
 
-    std::cout << "手牌: " << tile << std::endl;
+    toncha->sortHand();
 
-//    std::cout << "\033[1;31mbold red text\033[0m\n";
+    std::cout << *toncha << std::endl;
+    std::cout << *nancha << std::endl;
+    std::cout << *shacha << std::endl;
+    std::cout << *peicha << std::endl;
 
-//    auto tableNoAkaDora = szm::Table<>{false};
-//    std::cout << tableNoAkaDora.tilesToString() << std::endl;
+    auto t = (*toncha)[0];
+    table.discardTile(toncha, t);
+    table.updateKawa();
+
+    std::cout << *toncha << std::endl;
+
+//    std::cout << std::endl;
+//    std::cout << *t << std::endl;
+
+//    auto tile = table.grabTile(szm::TileOrigins::Toncha);
+//    std::cout << table << std::endl;
+//    std::cout << std::endl;
+//    std::cout << "手牌: " << *tile << std::endl;
+//    table.discardTile(tile);
+//    std::cout << "捨て牌: " << *tile << std::endl;
 
     return 0;
 }

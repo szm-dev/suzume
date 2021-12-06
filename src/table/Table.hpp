@@ -9,16 +9,12 @@
 #include "tiles/TileUtils.hpp"
 #include "settings/Random.hpp"
 #include "settings/GlobalFlags.hpp"
-#if SZM_OUTPUT_COLORS
-#include "settings/OutputModifier.hpp"
-#endif
+#include "player/Player.hpp"
 
 #include <array>
 #include <sstream>
 #include <iomanip>
 #include <algorithm>
-
-#define SZM_RIICHI_TILE_COUNT 136
 
 namespace szm {
     template <Languages TLanguage = Languages::English, int TTileCount = SZM_RIICHI_TILE_COUNT>
@@ -35,6 +31,7 @@ namespace szm {
         }
 
         typedef Tile<TLanguage> TDTile;
+        typedef Player<TLanguage> TDPlayer;
 
         const TDTile & getTile(int idx) const
         {
@@ -134,10 +131,7 @@ namespace szm {
 
             // Cleanup tile states.
             for (TDTile *tile: deadWallTileSet_) {
-                tile->unsetTileState(TileStates::Wanpai, TileStates::UraDora);
-                if (!TileInfoMap::get(tile->getTile()).red) {
-                    tile->unsetTileState(TileStates::Dora);
-                }
+                tile->unsetTileState(TileStates::Wanpai, TileStates::UraDora, TileStates::Dora, TileStates::DoraIndicator, TileStates::UraDoraIndicator);
             }
 
             deadWallTileSet_.clear();
@@ -201,7 +195,7 @@ namespace szm {
 
                 // Aka dora
                 if (TileInfoMap::get(tile->getTile()).red)
-                    tile->setTileState(TileStates::Dora);
+                    tile->setTileState(TileStates::AkaDora);
             }
 
             for (int i = 0; i < tileCount; i++) {
@@ -225,7 +219,7 @@ namespace szm {
             }
         }
 
-        TDTile grabTile()
+        TDTile * grabTileImpl(const TileOrigins dest = TileOrigins::Haiyama, const TileLocations loc = TileLocations::Te)
         {
             // TODO: Implement ryuukyoku conditions.
 
@@ -233,8 +227,62 @@ namespace szm {
             tileOffset_++;
 
             tile->setTileState(TileStates::Tehai);
+            tile->setLocOrig(loc, dest);
 
-            return *tile;
+            return tile;
+        }
+
+        TDPlayer * getPlayer(const TileOrigins origin)
+        {
+            TDPlayer * player = nullptr;
+            switch (origin) {
+                default:
+                    player = getPlayer(0);
+                    break;
+                case TileOrigins::Nancha:
+                    player = getPlayer(1);
+                    break;
+                case TileOrigins::Shacha:
+                    player = getPlayer(2);
+                    break;
+                case TileOrigins::Peicha:
+                    player = getPlayer(3);
+                    break;
+            }
+
+            return player;
+        }
+
+        TDTile * grabTile(const TileOrigins origin)
+        {
+            return grabTile(getPlayer(origin));
+        }
+
+        TDTile * grabTile(TDPlayer * player)
+        {
+            TDTile * tile = grabTileImpl(player->getOrigin(), TileLocations::Te);
+            player->addTile(tile);
+
+            return tile;
+        }
+
+        void discardTile(const TileOrigins origin, TDTile* tile)
+        {
+            getPlayer(origin)->cutTile(tile);
+            discardTile(tile);
+        }
+
+        void discardTile(TDPlayer * player, TDTile* tile)
+        {
+            player->cutTile(tile);
+            discardTile(tile);
+        }
+
+        void discardTile(TDTile* tile)
+        {
+            tile->setLocOrig(TileLocations::Kawa, tile->getOrigin());
+            tile->unsetTileState(TileStates::Tehai);
+            tile->setTileState(TileStates::Sutehai);
         }
 
         std::string tilesToString() {
@@ -247,6 +295,148 @@ namespace szm {
             return ss.str();
         }
 
+        int countKawahai() const
+        {
+            int i = 0;
+            for (TDTile * tile : tileSet_) {
+                if (tile->getLocation() == TileLocations::Kawa)
+                    i++;
+            }
+
+            return i;
+        }
+
+        int countWanpai() const
+        {
+            int i = 0;
+            for (TDTile * tile : tileSet_) {
+                if (tile->hasTileState(TileStates::Wanpai))
+                    i++;
+            }
+
+            return i;
+        }
+
+        int countYamahai() const
+        {
+            int i = 0;
+            for (TDTile * tile : tileSet_) {
+                if ((tile->getLocation() == TileLocations::Yama) && (!tile->hasTileState(TileStates::Wanpai)))
+                    i++;
+            }
+
+            return i;
+        }
+
+        int countTehai() const
+        {
+            int i = 0;
+            for (TDTile * tile : tileSet_) {
+                if (tile->getLocation() == TileLocations::Te)
+                    i++;
+            }
+
+            return i;
+        }
+
+        void addPlayers()
+        {
+            players_[0] = new TDPlayer{TileOrigins::Toncha};
+            players_[1] = new TDPlayer{TileOrigins::Nancha};
+            players_[2] = new TDPlayer{TileOrigins::Shacha};
+            players_[3] = new TDPlayer{TileOrigins::Peicha};
+        }
+
+        void addPlayer(TDPlayer * player)
+        {
+            TileOrigins origin = player->getOrigin();
+
+            switch (origin) {
+                default:
+                    return;
+                case TileOrigins::Toncha:
+                    players_[0] = player;
+                case TileOrigins::Nancha:
+                    players_[1] = player;
+                case TileOrigins::Shacha:
+                    players_[2] = player;
+                case TileOrigins::Peicha:
+                    players_[3] = player;
+            }
+        }
+
+        TDPlayer * getPlayer(int idx)
+        {
+            return players_[(idx < 0 ? 0 : idx) % 4];
+        }
+
+        void dealTiles()
+        {
+            for (int i = 0; i < 13; i++) {
+                grabTile(TileOrigins::Toncha);
+                grabTile(TileOrigins::Nancha);
+                grabTile(TileOrigins::Shacha);
+                grabTile(TileOrigins::Peicha);
+            }
+
+            grabTile(TileOrigins::Toncha);
+        }
+
+        std::vector<TDTile*> getIndicatedDora() const
+        {
+            std::vector<TDTile*> dora;
+
+            for (TDTile * tile : tileSet_) {
+                if (tile->hasTileState(TileStates::Dora) && !tile->hasTileState(TileStates::AkaDora))
+                    dora.push_back(tile);
+            }
+
+            return dora;
+        }
+
+        std::vector<TDTile*> getIndicatedUraDora() const
+        {
+            std::vector<TDTile*> dora;
+
+            for (TDTile * tile : tileSet_) {
+                if (tile->hasTileState(TileStates::UraDora))
+                    dora.push_back(tile);
+            }
+
+            return dora;
+        }
+
+        std::vector<TDTile*> getDora() const
+        {
+            std::vector<TDTile*> dora;
+
+            for (TDTile * tile : tileSet_) {
+                if (tile->hasTileState(TileStates::Dora) || tile->hasTileState(TileStates::AkaDora) || tile->hasTileState(TileStates::UraDora))
+                    dora.push_back(tile);
+            }
+
+            return dora;
+        }
+
+        void updateKawa()
+        {
+            players_[0]->clearKawa();
+            players_[1]->clearKawa();
+            players_[2]->clearKawa();
+            players_[3]->clearKawa();
+
+            for (TDTile * tile : tileSet_) {
+                if ((tile->getLocation() == TileLocations::Kawa) && tile->getOrigin() == TileOrigins::Toncha)
+                    players_[0]->addToKawa(tile);
+                if ((tile->getLocation() == TileLocations::Kawa) && tile->getOrigin() == TileOrigins::Nancha)
+                    players_[1]->addToKawa(tile);
+                if ((tile->getLocation() == TileLocations::Kawa) && tile->getOrigin() == TileOrigins::Shacha)
+                    players_[2]->addToKawa(tile);
+                if ((tile->getLocation() == TileLocations::Kawa) && tile->getOrigin() == TileOrigins::Peicha)
+                    players_[3]->addToKawa(tile);
+            }
+        }
+
         static const int tileCount = TTileCount;
         static const int deadWallTileCount = 2*7;
         static const int numberTileCount = 9*4;
@@ -255,7 +445,9 @@ namespace szm {
     protected:
         bool useAkaDora_ = true; /// Red dora.
         std::array<TDTile*, tileCount> tileSet_;
+        std::array<TDTile*, tileCount> orderedTileSet_;
         std::vector<TDTile*> deadWallTileSet_;
+        std::array<TDPlayer*, 4> players_;
 
         int wallShift_ = 0;
         int tileOffset_ = 0;
@@ -266,24 +458,8 @@ namespace szm {
     {
         for (int i = 0; i < table.tileCount; i++) {
             auto tile = table.getTile(i);
-
-#if SZM_OUTPUT_COLORS
-            os << Modifier(ModifierCode::FG_DEFAULT) << Modifier(ModifierCode::BG_DEFAULT);
-
-            if (tile.hasTileState(TileStates::Wanpai))
-                os << Modifier(ModifierCode::BG_YELLOW) << Modifier(ModifierCode::FG_BLACK);
-            if (tile.hasTileState(TileStates::Tehai))
-                os << Modifier(ModifierCode::BG_GREEN)  << Modifier(ModifierCode::FG_BLACK);
-            if (tile.hasTileState(TileStates::UraDora) || tile.hasTileState(TileStates::Dora))
-                os << Modifier(ModifierCode::FG_RED);
-#endif
-
-            os << std::setfill('0') << std::setw(3) << i << ": " << tile.toString() << std::endl;
+            os << std::setfill('0') << std::setw(3) << i << ": " << tile << std::endl;
         }
-
-#if SZM_OUTPUT_COLORS
-        os << Modifier(ModifierCode::FG_DEFAULT) << Modifier(ModifierCode::BG_DEFAULT);
-#endif
 
         return os;
     }

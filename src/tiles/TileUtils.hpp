@@ -31,6 +31,15 @@ public:                                   \
         } catch (std::out_of_range &e) {  \
             return {};                 \
         };                                \
+    }                               \
+    template <Languages TLanguage> \
+    static const TileInfoDyn get(const Tile<TLanguage> * tile)                \
+    {                                     \
+        try {                             \
+            return map.at(tile->getTile()); \
+        } catch (std::out_of_range &e) {  \
+            return {};                 \
+        };                                \
     }                                     \
 private:                                  \
     static std::map<Tiles, TileInfoDyn> createMap() \

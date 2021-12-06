@@ -73,21 +73,114 @@ namespace szm {
         }
     };
 
+    // INSERT LOCALIZATIONS BELOW
+    // --------------------------
 
-//    template <Languages TLanguage, typename TType, TType TValue>
-//    const std::string Localization<TLanguage, TType, TValue>::str = "N/A";
+    // TILE LOCATIONS
+    // English
+    ADD_LOCALIZATION(Languages::English, TileLocations::Yama, "wall");
+    ADD_LOCALIZATION(Languages::English, TileLocations::Kawa, "discards");
+    ADD_LOCALIZATION(Languages::English, TileLocations::Te, "hand");
 
+    MAKE_MAP(Languages::English, TileLocations,
+             ADD_MAP_ENTRY(Languages::English, TileLocations::Yama)
+             ADD_MAP_ENTRY(Languages::English, TileLocations::Kawa)
+             ADD_MAP_ENTRY(Languages::English, TileLocations::Te)
+    );
 
-//    template <Languages TLanguage, Tiles TValue>
-//    struct Localization<TLanguage, Tiles, TValue> {
-//        static constexpr const char* str = "N/A";
-//    };
+    // Japanese
+    ADD_LOCALIZATION(Languages::Japanese, TileLocations::Yama, "山");
+    ADD_LOCALIZATION(Languages::Japanese, TileLocations::Kawa, "河");
+    ADD_LOCALIZATION(Languages::Japanese, TileLocations::Te, "手");
 
-//    template <Languages TLanguage, Tiles TValue>
-//    Localization<TLanguage, typeof(TValue), TValue> getLocalization()
-//    {
-//        return
-//    }
+    MAKE_MAP(Languages::Japanese, TileLocations,
+             ADD_MAP_ENTRY(Languages::Japanese, TileLocations::Yama)
+                     ADD_MAP_ENTRY(Languages::Japanese, TileLocations::Kawa)
+                     ADD_MAP_ENTRY(Languages::Japanese, TileLocations::Te)
+    );
+
+    // Japanese Kanji
+    ADD_LOCALIZATION(Languages::JapaneseKanji, TileLocations::Yama, "山");
+    ADD_LOCALIZATION(Languages::JapaneseKanji, TileLocations::Kawa, "河");
+    ADD_LOCALIZATION(Languages::JapaneseKanji, TileLocations::Te, "手");
+
+    MAKE_MAP(Languages::JapaneseKanji, TileLocations,
+             ADD_MAP_ENTRY(Languages::JapaneseKanji, TileLocations::Yama)
+                     ADD_MAP_ENTRY(Languages::JapaneseKanji, TileLocations::Kawa)
+                     ADD_MAP_ENTRY(Languages::JapaneseKanji, TileLocations::Te)
+    );
+
+    // Japanese Phonetic
+    ADD_LOCALIZATION(Languages::JapanesePhonetic, TileLocations::Yama, "ヤマ");
+    ADD_LOCALIZATION(Languages::JapanesePhonetic, TileLocations::Kawa, "カワ");
+    ADD_LOCALIZATION(Languages::JapanesePhonetic, TileLocations::Te, "テ");
+
+    MAKE_MAP(Languages::JapanesePhonetic, TileLocations,
+             ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileLocations::Yama)
+                     ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileLocations::Kawa)
+                     ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileLocations::Te)
+    );
+
+    // TILE ORIGINS
+    // English
+    ADD_LOCALIZATION(Languages::English, TileOrigins::Haiyama, "undealts");
+    ADD_LOCALIZATION(Languages::English, TileOrigins::Toncha, "East player");
+    ADD_LOCALIZATION(Languages::English, TileOrigins::Nancha, "South player");
+    ADD_LOCALIZATION(Languages::English, TileOrigins::Shacha, "West player");
+    ADD_LOCALIZATION(Languages::English, TileOrigins::Peicha, "North player");
+
+    MAKE_MAP(Languages::English, TileOrigins,
+             ADD_MAP_ENTRY(Languages::English, TileOrigins::Haiyama)
+                     ADD_MAP_ENTRY(Languages::English, TileOrigins::Toncha)
+                     ADD_MAP_ENTRY(Languages::English, TileOrigins::Nancha)
+                     ADD_MAP_ENTRY(Languages::English, TileOrigins::Shacha)
+                     ADD_MAP_ENTRY(Languages::English, TileOrigins::Peicha)
+    );
+
+    // Japanese
+    ADD_LOCALIZATION(Languages::Japanese, TileOrigins::Haiyama, "牌山");
+    ADD_LOCALIZATION(Languages::Japanese, TileOrigins::Toncha, "東家");
+    ADD_LOCALIZATION(Languages::Japanese, TileOrigins::Nancha, "南家");
+    ADD_LOCALIZATION(Languages::Japanese, TileOrigins::Shacha, "西家");
+    ADD_LOCALIZATION(Languages::Japanese, TileOrigins::Peicha, "北家");
+
+    MAKE_MAP(Languages::Japanese, TileOrigins,
+             ADD_MAP_ENTRY(Languages::Japanese, TileOrigins::Haiyama)
+                     ADD_MAP_ENTRY(Languages::Japanese, TileOrigins::Toncha)
+                     ADD_MAP_ENTRY(Languages::Japanese, TileOrigins::Nancha)
+                     ADD_MAP_ENTRY(Languages::Japanese, TileOrigins::Shacha)
+                     ADD_MAP_ENTRY(Languages::Japanese, TileOrigins::Peicha)
+    );
+
+    // Japanese Kanji
+    ADD_LOCALIZATION(Languages::JapaneseKanji, TileOrigins::Haiyama, "牌山");
+    ADD_LOCALIZATION(Languages::JapaneseKanji, TileOrigins::Toncha, "東家");
+    ADD_LOCALIZATION(Languages::JapaneseKanji, TileOrigins::Nancha, "南家");
+    ADD_LOCALIZATION(Languages::JapaneseKanji, TileOrigins::Shacha, "西家");
+    ADD_LOCALIZATION(Languages::JapaneseKanji, TileOrigins::Peicha, "北家");
+
+    MAKE_MAP(Languages::JapaneseKanji, TileOrigins,
+             ADD_MAP_ENTRY(Languages::JapaneseKanji, TileOrigins::Haiyama)
+                     ADD_MAP_ENTRY(Languages::JapaneseKanji, TileOrigins::Toncha)
+                     ADD_MAP_ENTRY(Languages::JapaneseKanji, TileOrigins::Nancha)
+                     ADD_MAP_ENTRY(Languages::JapaneseKanji, TileOrigins::Shacha)
+                     ADD_MAP_ENTRY(Languages::JapaneseKanji, TileOrigins::Peicha)
+    );
+
+    // Japanese Phonetic
+    ADD_LOCALIZATION(Languages::JapanesePhonetic, TileOrigins::Haiyama, "ハイヤマ");
+    ADD_LOCALIZATION(Languages::JapanesePhonetic, TileOrigins::Toncha, "トンチャ");
+    ADD_LOCALIZATION(Languages::JapanesePhonetic, TileOrigins::Nancha, "ナンチャ");
+    ADD_LOCALIZATION(Languages::JapanesePhonetic, TileOrigins::Shacha, "シャーチャ");
+    ADD_LOCALIZATION(Languages::JapanesePhonetic, TileOrigins::Peicha, "ペイチャ");
+
+    MAKE_MAP(Languages::JapanesePhonetic, TileOrigins,
+             ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileOrigins::Haiyama)
+                     ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileOrigins::Toncha)
+                     ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileOrigins::Nancha)
+                     ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileOrigins::Shacha)
+                     ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileOrigins::Peicha)
+    );
 
     // TILE STATES
     // English
@@ -96,6 +189,7 @@ namespace szm {
     ADD_LOCALIZATION(Languages::English, TileStates::Wanpai, "dead wall");
     ADD_LOCALIZATION(Languages::English, TileStates::Dora, "dora");
     ADD_LOCALIZATION(Languages::English, TileStates::UraDora, "hidden dora");
+    ADD_LOCALIZATION(Languages::English, TileStates::AkaDora, "red dora");
     ADD_LOCALIZATION(Languages::English, TileStates::DoraIndicator, "dora indicator");
     ADD_LOCALIZATION(Languages::English, TileStates::UraDoraIndicator, "hidden dora indicator");
     ADD_LOCALIZATION(Languages::English, TileStates::Tehai, "tile in hand");
@@ -107,6 +201,7 @@ namespace szm {
                      ADD_MAP_ENTRY(Languages::English, TileStates::Wanpai)
                      ADD_MAP_ENTRY(Languages::English, TileStates::Dora)
                      ADD_MAP_ENTRY(Languages::English, TileStates::UraDora)
+                     ADD_MAP_ENTRY(Languages::English, TileStates::AkaDora)
                      ADD_MAP_ENTRY(Languages::English, TileStates::DoraIndicator)
                      ADD_MAP_ENTRY(Languages::English, TileStates::UraDoraIndicator)
                      ADD_MAP_ENTRY(Languages::English, TileStates::Tehai)
@@ -119,6 +214,7 @@ namespace szm {
     ADD_LOCALIZATION(Languages::Japanese, TileStates::Wanpai, "王牌");
     ADD_LOCALIZATION(Languages::Japanese, TileStates::Dora, "ドラ");
     ADD_LOCALIZATION(Languages::Japanese, TileStates::UraDora, "裏ドラ");
+    ADD_LOCALIZATION(Languages::Japanese, TileStates::AkaDora, "赤ドラ");
     ADD_LOCALIZATION(Languages::Japanese, TileStates::DoraIndicator, "ドラ表示");
     ADD_LOCALIZATION(Languages::Japanese, TileStates::UraDoraIndicator, "裏ドラ表示");
     ADD_LOCALIZATION(Languages::Japanese, TileStates::Tehai, "手牌");
@@ -130,6 +226,7 @@ namespace szm {
                      ADD_MAP_ENTRY(Languages::Japanese, TileStates::Wanpai)
                      ADD_MAP_ENTRY(Languages::Japanese, TileStates::Dora)
                      ADD_MAP_ENTRY(Languages::Japanese, TileStates::UraDora)
+                     ADD_MAP_ENTRY(Languages::Japanese, TileStates::AkaDora)
                      ADD_MAP_ENTRY(Languages::Japanese, TileStates::DoraIndicator)
                      ADD_MAP_ENTRY(Languages::Japanese, TileStates::UraDoraIndicator)
                      ADD_MAP_ENTRY(Languages::Japanese, TileStates::Tehai)
@@ -142,6 +239,7 @@ namespace szm {
     ADD_LOCALIZATION(Languages::JapaneseKanji, TileStates::Wanpai, "王牌");
     ADD_LOCALIZATION(Languages::JapaneseKanji, TileStates::Dora, "ドラ");
     ADD_LOCALIZATION(Languages::JapaneseKanji, TileStates::UraDora, "裏ドラ");
+    ADD_LOCALIZATION(Languages::JapaneseKanji, TileStates::AkaDora, "赤ドラ");
     ADD_LOCALIZATION(Languages::JapaneseKanji, TileStates::DoraIndicator, "ドラ表示");
     ADD_LOCALIZATION(Languages::JapaneseKanji, TileStates::UraDoraIndicator, "裏ドラ表示");
     ADD_LOCALIZATION(Languages::JapaneseKanji, TileStates::Tehai, "手牌");
@@ -153,6 +251,7 @@ namespace szm {
                      ADD_MAP_ENTRY(Languages::JapaneseKanji, TileStates::Wanpai)
                      ADD_MAP_ENTRY(Languages::JapaneseKanji, TileStates::Dora)
                      ADD_MAP_ENTRY(Languages::JapaneseKanji, TileStates::UraDora)
+                     ADD_MAP_ENTRY(Languages::JapaneseKanji, TileStates::AkaDora)
                      ADD_MAP_ENTRY(Languages::JapaneseKanji, TileStates::DoraIndicator)
                      ADD_MAP_ENTRY(Languages::JapaneseKanji, TileStates::UraDoraIndicator)
                      ADD_MAP_ENTRY(Languages::JapaneseKanji, TileStates::Tehai)
@@ -165,6 +264,7 @@ namespace szm {
     ADD_LOCALIZATION(Languages::JapanesePhonetic, TileStates::Wanpai, "ワンパイ");
     ADD_LOCALIZATION(Languages::JapanesePhonetic, TileStates::Dora, "ドラ");
     ADD_LOCALIZATION(Languages::JapanesePhonetic, TileStates::UraDora, "ウラドラ");
+    ADD_LOCALIZATION(Languages::JapanesePhonetic, TileStates::AkaDora, "アカドラ");
     ADD_LOCALIZATION(Languages::JapanesePhonetic, TileStates::DoraIndicator, "ドラヒョウジ");
     ADD_LOCALIZATION(Languages::JapanesePhonetic, TileStates::UraDoraIndicator, "ウラドラヒョウジ");
     ADD_LOCALIZATION(Languages::JapanesePhonetic, TileStates::Tehai, "テハイ");
@@ -176,6 +276,7 @@ namespace szm {
                      ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileStates::Wanpai)
                      ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileStates::Dora)
                      ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileStates::UraDora)
+                     ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileStates::AkaDora)
                      ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileStates::DoraIndicator)
                      ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileStates::UraDoraIndicator)
                      ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileStates::Tehai)

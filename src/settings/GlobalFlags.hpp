@@ -5,6 +5,8 @@
 #ifndef SUZUME_GLOBALFLAGS_HPP
 #define SUZUME_GLOBALFLAGS_HPP
 
+#define SZM_RIICHI_TILE_COUNT 136
+
 /// Use ANSI escape characters to colorize debug output.
 #define SZM_OUTPUT_COLORS 1
 

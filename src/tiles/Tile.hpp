@@ -48,6 +48,8 @@ namespace szm {
         Tile(Tiles tile, TDTileStateVector states) : tile_(tile), states_{std::move(states)}
         {}
 
+        typedef std::pair<TileLocations, TileOrigins> TDTileLocOrig;
+
         std::string toString() const;
 
         Tiles getTile() const;
@@ -79,6 +81,44 @@ namespace szm {
 
         std::string getTileStateName() const;
 
+        TDTileLocOrig getLocOrig(int shift = 0) const
+        {
+            int s = locOrigs_.size()-1;
+            s = ((s + shift) < 0 ? 0 : (s + shift)) % (s+1);
+
+            return locOrigs_[s];
+        }
+
+        TileLocations getLocation(int shift = 0) const
+        {
+            return getLocOrig(shift).first;
+        }
+
+        TileOrigins getOrigin(int shift = 0) const
+        {
+            return getLocOrig(shift).second;
+        }
+
+        std::string getOriginName(int shift = 0) const
+        {
+            return localize<TLanguage>(getOrigin(shift));
+        }
+
+        std::string getLocationName(int shift = 0) const
+        {
+            return localize<TLanguage>(getLocation(shift));
+        }
+
+        void setLocOrig(TDTileLocOrig locOrig)
+        {
+            locOrigs_.push_back(std::move(locOrig));
+        }
+
+        void setLocOrig(TileLocations loc, TileOrigins orig)
+        {
+            locOrigs_.emplace_back(loc, orig);
+        }
+
         int getId() const;
 
         void setId(int id = 0, int maxTiles = 136);
@@ -87,11 +127,18 @@ namespace szm {
         {
             return 1;
         }
+
+        template <Languages TTLanguage>
+        friend bool operator<(Tile<TTLanguage> left, Tile<TTLanguage> right) {
+            return (left.getTile() < right.getTile());
+        }
     protected:
         std::string name_;
         Tiles tile_ = Tiles::Haku;
         TDTileStateVector states_ = {TileStates::Closed};
         int id_ = -1;
+
+        std::vector<TDTileLocOrig> locOrigs_ = {{TileLocations::Yama, TileOrigins::Haiyama}};
     };
 
     template<Languages TLanguage>
@@ -160,6 +207,7 @@ namespace szm {
     {
         std::stringstream ss;
         ss << getTileName() << " | " << getTileStateName();
+        ss << " [" << getOriginName() << " @ " << getLocationName() << "]";
 
         ss << " (#" << std::setfill('0') << std::setw(3) << getId() << ")";
 
@@ -191,6 +239,8 @@ namespace szm {
             os << Modifier(ModifierCode::BG_YELLOW) << Modifier(ModifierCode::FG_BLACK);
         if (tile.hasTileState(TileStates::Tehai))
             os << Modifier(ModifierCode::BG_GREEN)  << Modifier(ModifierCode::FG_BLACK);
+        if (tile.hasTileState(TileStates::Sutehai))
+            os << Modifier(ModifierCode::BG_MAGENTA)  << Modifier(ModifierCode::FG_BLACK);
         if (tile.hasTileState(TileStates::UraDora) || tile.hasTileState(TileStates::Dora))
             os << Modifier(ModifierCode::FG_RED);
 #endif
