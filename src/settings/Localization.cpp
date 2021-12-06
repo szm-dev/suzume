@@ -5,6 +5,11 @@
 #include "Localization.hpp"
 
 namespace szm {
+    INIT_LOCALIZATION_MAP(Languages::English, TileWaits);
+    INIT_LOCALIZATION_MAP(Languages::Japanese, TileWaits);
+    INIT_LOCALIZATION_MAP(Languages::JapaneseKanji, TileWaits);
+    INIT_LOCALIZATION_MAP(Languages::JapanesePhonetic, TileWaits);
+
     INIT_LOCALIZATION_MAP(Languages::English, TileLocations);
     INIT_LOCALIZATION_MAP(Languages::Japanese, TileLocations);
     INIT_LOCALIZATION_MAP(Languages::JapaneseKanji, TileLocations);

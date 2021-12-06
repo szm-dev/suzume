@@ -6,6 +6,7 @@
 
 #include "tiles/Tile.hpp"
 #include "table/Table.hpp"
+#include "hand/Analysis.hpp"
 
 int main()
 {
@@ -53,9 +54,38 @@ int main()
 
     auto t = (*toncha)[0];
     table.discardTile(toncha, t);
-    table.updateKawa();
 
     std::cout << *toncha << std::endl;
+
+    nancha->sortHand();
+    t = table.grabTile(nancha);
+
+    std::cout << "Current tile: " << *t << std::endl;
+
+//    table.discardTile(t);
+    std::cout << *nancha << std::endl;
+
+//    std::cout << *toncha << std::endl;
+
+    auto partialRuns = szm::Analysis::identifyPartialRuns(nancha->getHand().getTiles());
+
+    if (!partialRuns.empty()) {
+        std::cout << "***** Partial runs (" << partialRuns.size() << ") *****" << std::endl;
+        for (auto run: partialRuns) {
+            std::cout << run;
+            std::cout << "======" << std::endl;
+        }
+    }
+
+    auto fullRuns = szm::Analysis::identifyFullRuns(nancha->getHand().getTiles());
+
+    if (!fullRuns.empty()) {
+        std::cout << "***** Full runs (" << fullRuns.size() << ") *****" << std::endl;
+        for (auto run: fullRuns) {
+            std::cout << run;
+            std::cout << "======" << std::endl;
+        }
+    }
 
 //    std::cout << std::endl;
 //    std::cout << *t << std::endl;

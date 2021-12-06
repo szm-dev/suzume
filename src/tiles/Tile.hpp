@@ -9,6 +9,7 @@
 #include <utility>
 #include <sstream>
 #include <vector>
+#include <tuple>
 #include <iomanip>
 
 #include "TilesEnum.hpp"
@@ -48,7 +49,7 @@ namespace szm {
         Tile(Tiles tile, TDTileStateVector states) : tile_(tile), states_{std::move(states)}
         {}
 
-        typedef std::pair<TileLocations, TileOrigins> TDTileLocOrig;
+        typedef std::tuple<TileLocations, TileOrigins, TileStates> TDTileLocOrigState;
 
         std::string toString() const;
 
@@ -81,22 +82,22 @@ namespace szm {
 
         std::string getTileStateName() const;
 
-        TDTileLocOrig getLocOrig(int shift = 0) const
+        TDTileLocOrigState getLocOrigState(int shift = 0) const
         {
-            int s = locOrigs_.size()-1;
+            int s = locOrigStates_.size()-1;
             s = ((s + shift) < 0 ? 0 : (s + shift)) % (s+1);
 
-            return locOrigs_[s];
+            return locOrigStates_[s];
         }
 
         TileLocations getLocation(int shift = 0) const
         {
-            return getLocOrig(shift).first;
+            return std::get<0>(getLocOrigState(shift));
         }
 
         TileOrigins getOrigin(int shift = 0) const
         {
-            return getLocOrig(shift).second;
+            return std::get<1>(getLocOrigState(shift));
         }
 
         std::string getOriginName(int shift = 0) const
@@ -104,19 +105,29 @@ namespace szm {
             return localize<TLanguage>(getOrigin(shift));
         }
 
+        TileStates getTransitionState(int shift = 0) const
+        {
+            return std::get<2>(getLocOrigState(shift));
+        }
+
+        std::string getTransitionStateName(int shift = 0) const
+        {
+            return localize<TLanguage>(getTransitionState(shift));
+        }
+
         std::string getLocationName(int shift = 0) const
         {
             return localize<TLanguage>(getLocation(shift));
         }
 
-        void setLocOrig(TDTileLocOrig locOrig)
+        void setLocOrigState(TDTileLocOrigState locOrigState)
         {
-            locOrigs_.push_back(std::move(locOrig));
+            locOrigStates_.push_back(std::move(locOrigState));
         }
 
-        void setLocOrig(TileLocations loc, TileOrigins orig)
+        void setLocOrigState(TileLocations loc, TileOrigins orig, TileStates state = TileStates::Tsumohai)
         {
-            locOrigs_.emplace_back(loc, orig);
+            locOrigStates_.emplace_back(loc, orig, state);
         }
 
         int getId() const;
@@ -138,7 +149,7 @@ namespace szm {
         TDTileStateVector states_ = {TileStates::Closed};
         int id_ = -1;
 
-        std::vector<TDTileLocOrig> locOrigs_ = {{TileLocations::Yama, TileOrigins::Haiyama}};
+        std::vector<TDTileLocOrigState> locOrigStates_ = {{TileLocations::Yama, TileOrigins::Haiyama, TileStates::Yamahai}};
     };
 
     template<Languages TLanguage>
@@ -207,7 +218,7 @@ namespace szm {
     {
         std::stringstream ss;
         ss << getTileName() << " | " << getTileStateName();
-        ss << " [" << getOriginName() << " @ " << getLocationName() << "]";
+        ss << " | [" << getOriginName() << " @ " << getLocationName() << " | " << getTransitionStateName() << "]";
 
         ss << " (#" << std::setfill('0') << std::setw(3) << getId() << ")";
 
@@ -241,7 +252,7 @@ namespace szm {
             os << Modifier(ModifierCode::BG_GREEN)  << Modifier(ModifierCode::FG_BLACK);
         if (tile.hasTileState(TileStates::Sutehai))
             os << Modifier(ModifierCode::BG_MAGENTA)  << Modifier(ModifierCode::FG_BLACK);
-        if (tile.hasTileState(TileStates::UraDora) || tile.hasTileState(TileStates::Dora))
+        if (tile.hasTileState(TileStates::UraDora) || tile.hasTileState(TileStates::Dora) || tile.hasTileState(TileStates::AkaDora))
             os << Modifier(ModifierCode::FG_RED);
 #endif
 
@@ -250,6 +261,26 @@ namespace szm {
 #if SZM_OUTPUT_COLORS
         os << Modifier(ModifierCode::FG_DEFAULT) << Modifier(ModifierCode::BG_DEFAULT);
 #endif
+        return os;
+    }
+
+    template<Languages TLanguage>
+    std::ostream& operator << (std::ostream &os, const std::vector<Tile<TLanguage>>& tiles)
+    {
+        for (Tile<TLanguage>& tile : tiles) {
+            os << " = " << tile << std::endl;
+        }
+
+        return os;
+    }
+
+    template<Languages TLanguage>
+    std::ostream& operator << (std::ostream &os, const std::vector<Tile<TLanguage>*>& tiles)
+    {
+        for (Tile<TLanguage>* tile : tiles) {
+            os << " = " << *tile << std::endl;
+        }
+
         return os;
     }
 }

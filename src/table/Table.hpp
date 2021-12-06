@@ -219,7 +219,7 @@ namespace szm {
             }
         }
 
-        TDTile * grabTileImpl(const TileOrigins dest = TileOrigins::Haiyama, const TileLocations loc = TileLocations::Te)
+        TDTile * grabTileImpl(const TileOrigins dest = TileOrigins::Haiyama, const TileLocations loc = TileLocations::Te, const TileStates trns = TileStates::Tsumohai)
         {
             // TODO: Implement ryuukyoku conditions.
 
@@ -227,7 +227,8 @@ namespace szm {
             tileOffset_++;
 
             tile->setTileState(TileStates::Tehai);
-            tile->setLocOrig(loc, dest);
+//            tile->setTileState(TileStates::Tsumohai);
+            tile->setLocOrigState(loc, dest, trns);
 
             return tile;
         }
@@ -253,14 +254,14 @@ namespace szm {
             return player;
         }
 
-        TDTile * grabTile(const TileOrigins origin)
+        TDTile * grabTile(const TileOrigins origin, const TileStates trns = TileStates::Tsumohai)
         {
-            return grabTile(getPlayer(origin));
+            return grabTile(getPlayer(origin), trns);
         }
 
-        TDTile * grabTile(TDPlayer * player)
+        TDTile * grabTile(TDPlayer * player, const TileStates trns = TileStates::Tsumohai)
         {
-            TDTile * tile = grabTileImpl(player->getOrigin(), TileLocations::Te);
+            TDTile * tile = grabTileImpl(player->getOrigin(), TileLocations::Te, trns);
             player->addTile(tile);
 
             return tile;
@@ -280,9 +281,13 @@ namespace szm {
 
         void discardTile(TDTile* tile)
         {
-            tile->setLocOrig(TileLocations::Kawa, tile->getOrigin());
+            tile->setLocOrigState(TileLocations::Kawa, tile->getOrigin(), tile->getTransitionState());
             tile->unsetTileState(TileStates::Tehai);
             tile->setTileState(TileStates::Sutehai);
+            tile->unsetTileState(TileStates::Closed);
+            tile->setTileState(TileStates::Open);
+            getPlayer(tile->getOrigin())->cutTile(tile);
+            updateKawa();
         }
 
         std::string tilesToString() {
@@ -373,13 +378,13 @@ namespace szm {
         void dealTiles()
         {
             for (int i = 0; i < 13; i++) {
-                grabTile(TileOrigins::Toncha);
-                grabTile(TileOrigins::Nancha);
-                grabTile(TileOrigins::Shacha);
-                grabTile(TileOrigins::Peicha);
+                grabTile(TileOrigins::Toncha, TileStates::Haipai);
+                grabTile(TileOrigins::Nancha, TileStates::Haipai);
+                grabTile(TileOrigins::Shacha, TileStates::Haipai);
+                grabTile(TileOrigins::Peicha, TileStates::Haipai);
             }
 
-            grabTile(TileOrigins::Toncha);
+            grabTile(TileOrigins::Toncha, TileStates::Tsumohai);
         }
 
         std::vector<TDTile*> getIndicatedDora() const
@@ -436,6 +441,11 @@ namespace szm {
                     players_[3]->addToKawa(tile);
             }
         }
+
+//        std::vector<TDTile> checkPon(const TileOrigins origin) const
+//        {
+//
+//        }
 
         static const int tileCount = TTileCount;
         static const int deadWallTileCount = 2*7;

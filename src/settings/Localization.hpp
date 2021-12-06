@@ -76,6 +76,67 @@ namespace szm {
     // INSERT LOCALIZATIONS BELOW
     // --------------------------
 
+    // TILE WAITS
+    // English
+    ADD_LOCALIZATION(Languages::English, TileWaits::Ryanmen, "two-sided wait");
+    ADD_LOCALIZATION(Languages::English, TileWaits::Kanchan, "center wait");
+    ADD_LOCALIZATION(Languages::English, TileWaits::Penchan, "one-sided wait");
+    ADD_LOCALIZATION(Languages::English, TileWaits::Shanpon, "double-pon wait");
+    ADD_LOCALIZATION(Languages::English, TileWaits::Tanki, "pair wait");
+
+    MAKE_MAP(Languages::English, TileWaits,
+             ADD_MAP_ENTRY(Languages::English, TileWaits::Ryanmen)
+             ADD_MAP_ENTRY(Languages::English, TileWaits::Kanchan)
+             ADD_MAP_ENTRY(Languages::English, TileWaits::Penchan)
+             ADD_MAP_ENTRY(Languages::English, TileWaits::Shanpon)
+             ADD_MAP_ENTRY(Languages::English, TileWaits::Tanki)
+    );
+
+    // Japanese
+    ADD_LOCALIZATION(Languages::Japanese, TileWaits::Ryanmen, "リャンメン待ち");
+    ADD_LOCALIZATION(Languages::Japanese, TileWaits::Kanchan, "カンチャン待ち");
+    ADD_LOCALIZATION(Languages::Japanese, TileWaits::Penchan, "ペンチャン待ち");
+    ADD_LOCALIZATION(Languages::Japanese, TileWaits::Shanpon, "シャンポン待ち");
+    ADD_LOCALIZATION(Languages::Japanese, TileWaits::Tanki, "タンキ待ち");
+
+    MAKE_MAP(Languages::Japanese, TileWaits,
+             ADD_MAP_ENTRY(Languages::Japanese, TileWaits::Ryanmen)
+                     ADD_MAP_ENTRY(Languages::Japanese, TileWaits::Kanchan)
+                     ADD_MAP_ENTRY(Languages::Japanese, TileWaits::Penchan)
+                     ADD_MAP_ENTRY(Languages::Japanese, TileWaits::Shanpon)
+                     ADD_MAP_ENTRY(Languages::Japanese, TileWaits::Tanki)
+    );
+
+    // Japanese Kanji
+    ADD_LOCALIZATION(Languages::JapaneseKanji, TileWaits::Ryanmen, "両面待ち");
+    ADD_LOCALIZATION(Languages::JapaneseKanji, TileWaits::Kanchan, "槓張待ち");
+    ADD_LOCALIZATION(Languages::JapaneseKanji, TileWaits::Penchan, "辺張待ち");
+    ADD_LOCALIZATION(Languages::JapaneseKanji, TileWaits::Shanpon, "双碰待ち");
+    ADD_LOCALIZATION(Languages::JapaneseKanji, TileWaits::Tanki, "単騎待ち");
+
+    MAKE_MAP(Languages::JapaneseKanji, TileWaits,
+             ADD_MAP_ENTRY(Languages::JapaneseKanji, TileWaits::Ryanmen)
+                     ADD_MAP_ENTRY(Languages::JapaneseKanji, TileWaits::Kanchan)
+                     ADD_MAP_ENTRY(Languages::JapaneseKanji, TileWaits::Penchan)
+                     ADD_MAP_ENTRY(Languages::JapaneseKanji, TileWaits::Shanpon)
+                     ADD_MAP_ENTRY(Languages::JapaneseKanji, TileWaits::Tanki)
+    );
+
+    // Japanese Phonetic
+    ADD_LOCALIZATION(Languages::JapanesePhonetic, TileWaits::Ryanmen, "リャンメンマチ");
+    ADD_LOCALIZATION(Languages::JapanesePhonetic, TileWaits::Kanchan, "カンチャンマチ");
+    ADD_LOCALIZATION(Languages::JapanesePhonetic, TileWaits::Penchan, "ペンチャンマチ");
+    ADD_LOCALIZATION(Languages::JapanesePhonetic, TileWaits::Shanpon, "シャンポンマチ");
+    ADD_LOCALIZATION(Languages::JapanesePhonetic, TileWaits::Tanki, "タンキマチ");
+
+    MAKE_MAP(Languages::JapanesePhonetic, TileWaits,
+             ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileWaits::Ryanmen)
+                     ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileWaits::Kanchan)
+                     ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileWaits::Penchan)
+                     ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileWaits::Shanpon)
+                     ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileWaits::Tanki)
+    );
+
     // TILE LOCATIONS
     // English
     ADD_LOCALIZATION(Languages::English, TileLocations::Yama, "wall");
@@ -194,6 +255,13 @@ namespace szm {
     ADD_LOCALIZATION(Languages::English, TileStates::UraDoraIndicator, "hidden dora indicator");
     ADD_LOCALIZATION(Languages::English, TileStates::Tehai, "tile in hand");
     ADD_LOCALIZATION(Languages::English, TileStates::Sutehai, "discarded hand");
+    ADD_LOCALIZATION(Languages::English, TileStates::Kanpai, "kan tile");
+    ADD_LOCALIZATION(Languages::English, TileStates::Ponpai, "pon tile");
+    ADD_LOCALIZATION(Languages::English, TileStates::Ronpai, "ron tile");
+    ADD_LOCALIZATION(Languages::English, TileStates::Tsumohai, "drawn tile");
+    ADD_LOCALIZATION(Languages::English, TileStates::Chiipai, "chii tile");
+    ADD_LOCALIZATION(Languages::English, TileStates::Yamahai, "wall tile");
+    ADD_LOCALIZATION(Languages::English, TileStates::Haipai, "dealt tile");
 
     MAKE_MAP(Languages::English, TileStates,
              ADD_MAP_ENTRY(Languages::English, TileStates::Open)
@@ -206,6 +274,13 @@ namespace szm {
                      ADD_MAP_ENTRY(Languages::English, TileStates::UraDoraIndicator)
                      ADD_MAP_ENTRY(Languages::English, TileStates::Tehai)
                      ADD_MAP_ENTRY(Languages::English, TileStates::Sutehai)
+                     ADD_MAP_ENTRY(Languages::English, TileStates::Kanpai)
+                     ADD_MAP_ENTRY(Languages::English, TileStates::Ponpai)
+                     ADD_MAP_ENTRY(Languages::English, TileStates::Ronpai)
+                     ADD_MAP_ENTRY(Languages::English, TileStates::Tsumohai)
+                     ADD_MAP_ENTRY(Languages::English, TileStates::Chiipai)
+                     ADD_MAP_ENTRY(Languages::English, TileStates::Yamahai)
+                     ADD_MAP_ENTRY(Languages::English, TileStates::Haipai)
     );
 
     // Japanese
@@ -219,6 +294,13 @@ namespace szm {
     ADD_LOCALIZATION(Languages::Japanese, TileStates::UraDoraIndicator, "裏ドラ表示");
     ADD_LOCALIZATION(Languages::Japanese, TileStates::Tehai, "手牌");
     ADD_LOCALIZATION(Languages::Japanese, TileStates::Sutehai, "捨牌");
+    ADD_LOCALIZATION(Languages::Japanese, TileStates::Kanpai, "カン牌");
+    ADD_LOCALIZATION(Languages::Japanese, TileStates::Ponpai, "ポン牌");
+    ADD_LOCALIZATION(Languages::Japanese, TileStates::Ronpai, "ロン牌");
+    ADD_LOCALIZATION(Languages::Japanese, TileStates::Tsumohai, "ツモ牌");
+    ADD_LOCALIZATION(Languages::Japanese, TileStates::Chiipai, "チー牌");
+    ADD_LOCALIZATION(Languages::Japanese, TileStates::Yamahai, "山牌");
+    ADD_LOCALIZATION(Languages::Japanese, TileStates::Haipai, "配牌");
 
     MAKE_MAP(Languages::Japanese, TileStates,
              ADD_MAP_ENTRY(Languages::Japanese, TileStates::Open)
@@ -231,6 +313,13 @@ namespace szm {
                      ADD_MAP_ENTRY(Languages::Japanese, TileStates::UraDoraIndicator)
                      ADD_MAP_ENTRY(Languages::Japanese, TileStates::Tehai)
                      ADD_MAP_ENTRY(Languages::Japanese, TileStates::Sutehai)
+                     ADD_MAP_ENTRY(Languages::Japanese, TileStates::Kanpai)
+                     ADD_MAP_ENTRY(Languages::Japanese, TileStates::Ponpai)
+                     ADD_MAP_ENTRY(Languages::Japanese, TileStates::Ronpai)
+                     ADD_MAP_ENTRY(Languages::Japanese, TileStates::Tsumohai)
+                     ADD_MAP_ENTRY(Languages::Japanese, TileStates::Chiipai)
+                     ADD_MAP_ENTRY(Languages::Japanese, TileStates::Yamahai)
+                     ADD_MAP_ENTRY(Languages::Japanese, TileStates::Haipai)
     );
 
     // Japanese Kanji
@@ -244,6 +333,13 @@ namespace szm {
     ADD_LOCALIZATION(Languages::JapaneseKanji, TileStates::UraDoraIndicator, "裏ドラ表示");
     ADD_LOCALIZATION(Languages::JapaneseKanji, TileStates::Tehai, "手牌");
     ADD_LOCALIZATION(Languages::JapaneseKanji, TileStates::Sutehai, "捨牌");
+    ADD_LOCALIZATION(Languages::JapaneseKanji, TileStates::Kanpai, "槓牌");
+    ADD_LOCALIZATION(Languages::JapaneseKanji, TileStates::Ponpai, "碰牌");
+    ADD_LOCALIZATION(Languages::JapaneseKanji, TileStates::Ronpai, "栄牌");
+    ADD_LOCALIZATION(Languages::JapaneseKanji, TileStates::Tsumohai, "自摸牌");
+    ADD_LOCALIZATION(Languages::JapaneseKanji, TileStates::Chiipai, "吃牌");
+    ADD_LOCALIZATION(Languages::JapaneseKanji, TileStates::Yamahai, "山牌");
+    ADD_LOCALIZATION(Languages::JapaneseKanji, TileStates::Haipai, "配牌");
 
     MAKE_MAP(Languages::JapaneseKanji, TileStates,
              ADD_MAP_ENTRY(Languages::JapaneseKanji, TileStates::Open)
@@ -256,6 +352,13 @@ namespace szm {
                      ADD_MAP_ENTRY(Languages::JapaneseKanji, TileStates::UraDoraIndicator)
                      ADD_MAP_ENTRY(Languages::JapaneseKanji, TileStates::Tehai)
                      ADD_MAP_ENTRY(Languages::JapaneseKanji, TileStates::Sutehai)
+                     ADD_MAP_ENTRY(Languages::JapaneseKanji, TileStates::Kanpai)
+                     ADD_MAP_ENTRY(Languages::JapaneseKanji, TileStates::Ponpai)
+                     ADD_MAP_ENTRY(Languages::JapaneseKanji, TileStates::Ronpai)
+                     ADD_MAP_ENTRY(Languages::JapaneseKanji, TileStates::Tsumohai)
+                     ADD_MAP_ENTRY(Languages::JapaneseKanji, TileStates::Chiipai)
+                     ADD_MAP_ENTRY(Languages::JapaneseKanji, TileStates::Yamahai)
+                     ADD_MAP_ENTRY(Languages::JapaneseKanji, TileStates::Haipai)
     );
 
     // Japanese Phonetic
@@ -269,6 +372,13 @@ namespace szm {
     ADD_LOCALIZATION(Languages::JapanesePhonetic, TileStates::UraDoraIndicator, "ウラドラヒョウジ");
     ADD_LOCALIZATION(Languages::JapanesePhonetic, TileStates::Tehai, "テハイ");
     ADD_LOCALIZATION(Languages::JapanesePhonetic, TileStates::Sutehai, "ステハイ");
+    ADD_LOCALIZATION(Languages::JapanesePhonetic, TileStates::Kanpai, "カンパイ");
+    ADD_LOCALIZATION(Languages::JapanesePhonetic, TileStates::Ponpai, "ポンパイ");
+    ADD_LOCALIZATION(Languages::JapanesePhonetic, TileStates::Ronpai, "ロンパイ");
+    ADD_LOCALIZATION(Languages::JapanesePhonetic, TileStates::Tsumohai, "ツモハイ");
+    ADD_LOCALIZATION(Languages::JapanesePhonetic, TileStates::Chiipai, "チーハイ");
+    ADD_LOCALIZATION(Languages::JapanesePhonetic, TileStates::Yamahai, "ヤマハイ");
+    ADD_LOCALIZATION(Languages::JapanesePhonetic, TileStates::Haipai, "ハイパイ");
 
     MAKE_MAP(Languages::JapanesePhonetic, TileStates,
              ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileStates::Open)
@@ -281,6 +391,13 @@ namespace szm {
                      ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileStates::UraDoraIndicator)
                      ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileStates::Tehai)
                      ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileStates::Sutehai)
+                     ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileStates::Kanpai)
+                     ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileStates::Ponpai)
+                     ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileStates::Ronpai)
+                     ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileStates::Tsumohai)
+                     ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileStates::Chiipai)
+                     ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileStates::Yamahai)
+                     ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileStates::Haipai)
     );
 
     // TILES

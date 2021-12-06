@@ -126,6 +126,13 @@ namespace szm {
         UraDoraIndicator,
         Tehai, /// Tile in hand
         Sutehai, /// Discarded tile
+        Kanpai, /// Tile called with Kan
+        Ponpai, /// Tile called with Pon
+        Ronpai, /// Tile called with Ron
+        Tsumohai, /// Tile naturally drawn
+        Chiipai, /// Tile called with Chii
+        Yamahai, /// Tile in wall
+        Haipai, /// Dealt tile
         // English aliases
         Hand = Tehai,
         Discard = Sutehai
@@ -153,6 +160,14 @@ namespace szm {
         SouthP = Nancha,
         WestP = Shacha,
         NorthP = Peicha
+    };
+
+    enum class TileWaits {
+        Ryanmen, /// Waiting for one of tile on either side of an incomplete run
+        Kanchan, /// Waiting for the center tile of an incomplete run
+        Penchan, /// Waiting for one side of an incomplete run
+        Shanpon, /// Waiting for one of two pons
+        Tanki /// Waiting to complete pair through a ron
     };
 
     // Template comparison

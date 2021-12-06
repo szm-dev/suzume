@@ -6,7 +6,7 @@ A lightweight Riichi Mahjong engine written in C++14 (still in pre-alpha stage!)
 
 `suzume` aims to be a fast, bloat-free Mahjong engine, on which servers and game clients, AI testbeds, and more can be built eventually.
 `suzume` only depends on a C++14 compliant compiler, and has no external dependencies.
-Localization has been a top priority in this project, with extensive support of Japanese and English terminology (more languages can easily be added!).
+Localization has been a top priority in this project, with extensive support for Japanese and English terminology (more languages can easily be added!).
 
 Currently, the core game flow is being developed, after which the following items will be worked on:
 
@@ -16,6 +16,22 @@ Currently, the core game flow is being developed, after which the following item
 - _Agari/yaku_ (和了・役) checking and score calculation;
 - Automatic grouping of _koutsu_, _shuntsu_, _toitsu_ (刻・順・対子);
 - Automatic ranking of tile favorability (based on _yakuhai_ (役牌), game's/own wind (場・自風), state of the field (河)).
+
+### Features
+
+The following features are (or will soon be) implemented:
+
+- [x] Localized terminology (English & Japanese).
+- [x] Detailed tracking of present and past tile states:
+  - [x] Closed/open tracking (暗・明);
+  - [x] Player possession history;
+  - [x] Tile location and how it was obtained.
+- [x] _Shuntsu_ (run, 順子) and partial _shuntsu_ identification.
+- [ ] _Koutsu_ (set, 刻子) and _toitsu_ (対子) identification.
+- [ ] Waits (待ち) classification.
+- [ ] Hand ranking based on waits and discards.
+- [ ] Furiten (振り聴) checking.
+- [ ] Shanten (向聴) computation.
 
 ## Getting Started
 
