@@ -267,6 +267,21 @@ namespace szm {
             return tile;
         }
 
+        std::vector<TDTile*> grabTiles(int number, TDPlayer * player, const TileStates trns = TileStates::Tsumohai)
+        {
+            std::vector<TDTile*> tiles(number);
+
+            for (int i = 0; i < number; i++)
+                tiles.push_back(grabTile(player, trns));
+
+            return tiles;
+        }
+
+        std::vector<TDTile*> grabTiles(int number, const TileOrigins origin, const TileStates trns = TileStates::Tsumohai)
+        {
+            return grabTiles(number, getPlayer(origin), trns);
+        }
+
         void discardTile(const TileOrigins origin, TDTile* tile)
         {
             getPlayer(origin)->cutTile(tile);
@@ -377,14 +392,17 @@ namespace szm {
 
         void dealTiles()
         {
-            for (int i = 0; i < 13; i++) {
-                grabTile(TileOrigins::Toncha, TileStates::Haipai);
-                grabTile(TileOrigins::Nancha, TileStates::Haipai);
-                grabTile(TileOrigins::Shacha, TileStates::Haipai);
-                grabTile(TileOrigins::Peicha, TileStates::Haipai);
+            for (int i = 0; i < 3; i++) {
+                grabTiles(4, TileOrigins::Toncha, TileStates::Haipai);
+                grabTiles(4, TileOrigins::Nancha, TileStates::Haipai);
+                grabTiles(4, TileOrigins::Shacha, TileStates::Haipai);
+                grabTiles(4, TileOrigins::Peicha, TileStates::Haipai);
             }
 
-            grabTile(TileOrigins::Toncha, TileStates::Tsumohai);
+            grabTiles(2, TileOrigins::Toncha, TileStates::Tsumohai);
+            grabTile(TileOrigins::Nancha, TileStates::Tsumohai);
+            grabTile(TileOrigins::Shacha, TileStates::Tsumohai);
+            grabTile(TileOrigins::Peicha, TileStates::Tsumohai);
         }
 
         std::vector<TDTile*> getIndicatedDora() const

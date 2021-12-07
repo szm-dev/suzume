@@ -140,7 +140,7 @@ namespace szm {
         }
 
         template <Languages TTLanguage>
-        friend bool operator<(Tile<TTLanguage> left, Tile<TTLanguage> right) {
+        friend bool operator<(Tile<TLanguage> left, Tile<TTLanguage> right) {
             return (left.getTile() < right.getTile());
         }
     protected:
