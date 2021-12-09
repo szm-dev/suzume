@@ -163,6 +163,11 @@ namespace szm {
     };
 
     enum class TileWaits {
+        NoWait,
+        Shuntsu, // Run
+        Koutsu, // Triplet
+        Kantsu, // Quad
+        Toitsu, // Duo
         Ryanmen, /// Waiting for one of tile on either side of an incomplete run
         Kanchan, /// Waiting for the center tile of an incomplete run
         Penchan, /// Waiting for one side of an incomplete run

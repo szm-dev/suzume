@@ -78,6 +78,11 @@ namespace szm {
 
     // TILE WAITS
     // English
+    ADD_LOCALIZATION(Languages::English, TileWaits::NoWait, "no wait");
+    ADD_LOCALIZATION(Languages::English, TileWaits::Shuntsu, "run");
+    ADD_LOCALIZATION(Languages::English, TileWaits::Koutsu, "triplet");
+    ADD_LOCALIZATION(Languages::English, TileWaits::Kantsu, "quad");
+    ADD_LOCALIZATION(Languages::English, TileWaits::Toitsu, "duo");
     ADD_LOCALIZATION(Languages::English, TileWaits::Ryanmen, "two-sided wait");
     ADD_LOCALIZATION(Languages::English, TileWaits::Kanchan, "center wait");
     ADD_LOCALIZATION(Languages::English, TileWaits::Penchan, "one-sided wait");
@@ -85,6 +90,11 @@ namespace szm {
     ADD_LOCALIZATION(Languages::English, TileWaits::Tanki, "pair wait");
 
     MAKE_MAP(Languages::English, TileWaits,
+             ADD_MAP_ENTRY(Languages::English, TileWaits::NoWait)
+             ADD_MAP_ENTRY(Languages::English, TileWaits::Shuntsu)
+             ADD_MAP_ENTRY(Languages::English, TileWaits::Koutsu)
+             ADD_MAP_ENTRY(Languages::English, TileWaits::Kantsu)
+             ADD_MAP_ENTRY(Languages::English, TileWaits::Toitsu)
              ADD_MAP_ENTRY(Languages::English, TileWaits::Ryanmen)
              ADD_MAP_ENTRY(Languages::English, TileWaits::Kanchan)
              ADD_MAP_ENTRY(Languages::English, TileWaits::Penchan)
@@ -93,6 +103,11 @@ namespace szm {
     );
 
     // Japanese
+    ADD_LOCALIZATION(Languages::Japanese, TileWaits::NoWait, "待ちなし");
+    ADD_LOCALIZATION(Languages::Japanese, TileWaits::Shuntsu, "順子");
+    ADD_LOCALIZATION(Languages::Japanese, TileWaits::Koutsu, "刻子");
+    ADD_LOCALIZATION(Languages::Japanese, TileWaits::Kantsu, "槓子");
+    ADD_LOCALIZATION(Languages::Japanese, TileWaits::Toitsu, "対子");
     ADD_LOCALIZATION(Languages::Japanese, TileWaits::Ryanmen, "リャンメン待ち");
     ADD_LOCALIZATION(Languages::Japanese, TileWaits::Kanchan, "カンチャン待ち");
     ADD_LOCALIZATION(Languages::Japanese, TileWaits::Penchan, "ペンチャン待ち");
@@ -100,6 +115,11 @@ namespace szm {
     ADD_LOCALIZATION(Languages::Japanese, TileWaits::Tanki, "タンキ待ち");
 
     MAKE_MAP(Languages::Japanese, TileWaits,
+             ADD_MAP_ENTRY(Languages::Japanese, TileWaits::NoWait)
+             ADD_MAP_ENTRY(Languages::Japanese, TileWaits::Shuntsu)
+             ADD_MAP_ENTRY(Languages::Japanese, TileWaits::Koutsu)
+             ADD_MAP_ENTRY(Languages::Japanese, TileWaits::Kantsu)
+             ADD_MAP_ENTRY(Languages::Japanese, TileWaits::Toitsu)
              ADD_MAP_ENTRY(Languages::Japanese, TileWaits::Ryanmen)
                      ADD_MAP_ENTRY(Languages::Japanese, TileWaits::Kanchan)
                      ADD_MAP_ENTRY(Languages::Japanese, TileWaits::Penchan)
@@ -108,6 +128,11 @@ namespace szm {
     );
 
     // Japanese Kanji
+    ADD_LOCALIZATION(Languages::JapaneseKanji, TileWaits::NoWait, "待ち無し");
+    ADD_LOCALIZATION(Languages::JapaneseKanji, TileWaits::Shuntsu, "順子");
+    ADD_LOCALIZATION(Languages::JapaneseKanji, TileWaits::Koutsu, "刻子");
+    ADD_LOCALIZATION(Languages::JapaneseKanji, TileWaits::Kantsu, "槓子");
+    ADD_LOCALIZATION(Languages::JapaneseKanji, TileWaits::Toitsu, "対子");
     ADD_LOCALIZATION(Languages::JapaneseKanji, TileWaits::Ryanmen, "両面待ち");
     ADD_LOCALIZATION(Languages::JapaneseKanji, TileWaits::Kanchan, "槓張待ち");
     ADD_LOCALIZATION(Languages::JapaneseKanji, TileWaits::Penchan, "辺張待ち");
@@ -115,6 +140,11 @@ namespace szm {
     ADD_LOCALIZATION(Languages::JapaneseKanji, TileWaits::Tanki, "単騎待ち");
 
     MAKE_MAP(Languages::JapaneseKanji, TileWaits,
+             ADD_MAP_ENTRY(Languages::JapaneseKanji, TileWaits::NoWait)
+             ADD_MAP_ENTRY(Languages::JapaneseKanji, TileWaits::Shuntsu)
+             ADD_MAP_ENTRY(Languages::JapaneseKanji, TileWaits::Koutsu)
+             ADD_MAP_ENTRY(Languages::JapaneseKanji, TileWaits::Kantsu)
+             ADD_MAP_ENTRY(Languages::JapaneseKanji, TileWaits::Toitsu)
              ADD_MAP_ENTRY(Languages::JapaneseKanji, TileWaits::Ryanmen)
                      ADD_MAP_ENTRY(Languages::JapaneseKanji, TileWaits::Kanchan)
                      ADD_MAP_ENTRY(Languages::JapaneseKanji, TileWaits::Penchan)
@@ -123,6 +153,11 @@ namespace szm {
     );
 
     // Japanese Phonetic
+    ADD_LOCALIZATION(Languages::JapanesePhonetic, TileWaits::NoWait, "マチナシ");
+    ADD_LOCALIZATION(Languages::JapanesePhonetic, TileWaits::Shuntsu, "シュンツ");
+    ADD_LOCALIZATION(Languages::JapanesePhonetic, TileWaits::Koutsu, "コーツ");
+    ADD_LOCALIZATION(Languages::JapanesePhonetic, TileWaits::Kantsu, "カンツ");
+    ADD_LOCALIZATION(Languages::JapanesePhonetic, TileWaits::Toitsu, "トイツ");
     ADD_LOCALIZATION(Languages::JapanesePhonetic, TileWaits::Ryanmen, "リャンメンマチ");
     ADD_LOCALIZATION(Languages::JapanesePhonetic, TileWaits::Kanchan, "カンチャンマチ");
     ADD_LOCALIZATION(Languages::JapanesePhonetic, TileWaits::Penchan, "ペンチャンマチ");
@@ -130,6 +165,11 @@ namespace szm {
     ADD_LOCALIZATION(Languages::JapanesePhonetic, TileWaits::Tanki, "タンキマチ");
 
     MAKE_MAP(Languages::JapanesePhonetic, TileWaits,
+             ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileWaits::NoWait)
+             ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileWaits::Shuntsu)
+             ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileWaits::Koutsu)
+             ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileWaits::Kantsu)
+             ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileWaits::Toitsu)
              ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileWaits::Ryanmen)
                      ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileWaits::Kanchan)
                      ADD_MAP_ENTRY(Languages::JapanesePhonetic, TileWaits::Penchan)

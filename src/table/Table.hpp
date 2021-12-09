@@ -48,6 +48,172 @@ namespace szm {
             return tileSet_[idx];
         }
 
+        TDTile * getUnshuffledTilePointer(int idx)
+        {
+            return unshuffledTileSet_[idx];
+        }
+
+        std::vector<TDTile*> getAllTilePointers(Tiles tile)
+        {
+            std::vector<TDTile*> tiles;
+            int offset = 0;
+            bool red = false;
+
+            switch (tile) {
+                case Tiles::Man1:
+                    offset = 0;
+                    break;
+                case Tiles::Man2:
+                    offset = 1;
+                    break;
+                case Tiles::Man3:
+                    offset = 2;
+                    break;
+                case Tiles::Man4:
+                    offset = 3;
+                    break;
+                case Tiles::Man5:
+                    offset = 4;
+                    break;
+                case Tiles::ManR5:
+                    offset = 4;
+                    red = true;
+                    break;
+                case Tiles::Man6:
+                    offset = 5;
+                    break;
+                case Tiles::Man7:
+                    offset = 6;
+                    break;
+                case Tiles::Man8:
+                    offset = 7;
+                    break;
+                case Tiles::Man9:
+                    offset = 8;
+                    break;
+                case Tiles::Pin1:
+                    offset = 9;
+                    break;
+                case Tiles::Pin2:
+                    offset = 10;
+                    break;
+                case Tiles::Pin3:
+                    offset = 11;
+                    break;
+                case Tiles::Pin4:
+                    offset = 12;
+                    break;
+                case Tiles::Pin5:
+                    offset = 13;
+                    break;
+                case Tiles::PinR5:
+                    offset = 13;
+                    red = true;
+                    break;
+                case Tiles::Pin6:
+                    offset = 14;
+                    break;
+                case Tiles::Pin7:
+                    offset = 15;
+                    break;
+                case Tiles::Pin8:
+                    offset = 16;
+                    break;
+                case Tiles::Pin9:
+                    offset = 17;
+                    break;
+                case Tiles::Sou1:
+                    offset = 18;
+                    break;
+                case Tiles::Sou2:
+                    offset = 19;
+                    break;
+                case Tiles::Sou3:
+                    offset = 20;
+                    break;
+                case Tiles::Sou4:
+                    offset = 21;
+                    break;
+                case Tiles::Sou5:
+                    offset = 22;
+                    break;
+                case Tiles::SouR5:
+                    offset = 22;
+                    red = true;
+                    break;
+                case Tiles::Sou6:
+                    offset = 23;
+                    break;
+                case Tiles::Sou7:
+                    offset = 24;
+                    break;
+                case Tiles::Sou8:
+                    offset = 25;
+                    break;
+                case Tiles::Sou9:
+                    offset = 26;
+                    break;
+                case Tiles::Ton:
+                    offset = 27;
+                    break;
+                case Tiles::Nan:
+                    offset = 28;
+                    break;
+                case Tiles::Sha:
+                    offset = 29;
+                    break;
+                case Tiles::Pei:
+                    offset = 30;
+                    break;
+                case Tiles::Haku:
+                    offset = 31;
+                    break;
+                case Tiles::Hatu:
+                    offset = 32;
+                    break;
+                case Tiles::Chun:
+                    offset = 33;
+                    break;
+            }
+
+            if (red) {
+                tiles.push_back(getUnshuffledTilePointer(3*34 + offset));
+            } else {
+                for (int i = 0; i < tileCount; i+=34) {
+                    tiles.push_back(getUnshuffledTilePointer(i + offset));
+                }
+            }
+
+            return tiles;
+        }
+
+        int getNumberSeen(const TileOrigins origin, const Tiles tileType)
+        {
+            auto tiles = getAllTilePointers(tileType);
+
+            int seen = 0;
+            for (TDTile * tile : tiles) {
+                if (tile->getTile() != tileType)
+                    continue;
+
+                if ((tile->hasTileState(TileStates::DoraIndicator)) ||
+                    (tile->getLocation() == TileLocations::Kawa) ||
+                    ((tile->getLocation() == TileLocations::Te) &&
+                     (tile->getOrigin() == origin))) {
+                    seen++;
+                }
+            }
+
+            return seen;
+        }
+
+        int getNumberSeen(const TDPlayer * player, const Tiles tileType)
+        {
+            TileOrigins origin = player->getOrigin();
+
+            return getNumberSeen(origin, tileType);
+        }
+
         void initTileSet()
         {
             // Initialize all tiles except potential red dora (fives).
@@ -117,6 +283,8 @@ namespace szm {
                 tile->setId(i);
                 i++;
             }
+
+            unshuffledTileSet_ = tileSet_;
         }
 
         void shuffle()
@@ -447,16 +615,21 @@ namespace szm {
             players_[1]->clearKawa();
             players_[2]->clearKawa();
             players_[3]->clearKawa();
+            kawaTileSet_.clear();
 
             for (TDTile * tile : tileSet_) {
-                if ((tile->getLocation() == TileLocations::Kawa) && tile->getOrigin() == TileOrigins::Toncha)
-                    players_[0]->addToKawa(tile);
-                if ((tile->getLocation() == TileLocations::Kawa) && tile->getOrigin() == TileOrigins::Nancha)
-                    players_[1]->addToKawa(tile);
-                if ((tile->getLocation() == TileLocations::Kawa) && tile->getOrigin() == TileOrigins::Shacha)
-                    players_[2]->addToKawa(tile);
-                if ((tile->getLocation() == TileLocations::Kawa) && tile->getOrigin() == TileOrigins::Peicha)
-                    players_[3]->addToKawa(tile);
+                if (tile->getLocation() == TileLocations::Kawa) {
+                    kawaTileSet_.push_back(tile);
+
+                    if (tile->getOrigin() == TileOrigins::Toncha)
+                        players_[0]->addToKawa(tile);
+                    if (tile->getOrigin() == TileOrigins::Nancha)
+                        players_[1]->addToKawa(tile);
+                    if (tile->getOrigin() == TileOrigins::Shacha)
+                        players_[2]->addToKawa(tile);
+                    if (tile->getOrigin() == TileOrigins::Peicha)
+                        players_[3]->addToKawa(tile);
+                }
             }
         }
 
@@ -472,9 +645,9 @@ namespace szm {
 
     protected:
         bool useAkaDora_ = true; /// Red dora.
-        std::array<TDTile*, tileCount> tileSet_;
+        std::array<TDTile*, tileCount> tileSet_, unshuffledTileSet_;
         std::array<TDTile*, tileCount> orderedTileSet_;
-        std::vector<TDTile*> deadWallTileSet_;
+        std::vector<TDTile*> deadWallTileSet_, kawaTileSet_;
         std::array<TDPlayer*, 4> players_;
 
         int wallShift_ = 0;

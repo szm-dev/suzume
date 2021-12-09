@@ -81,10 +81,11 @@ int main()
         if (!partialRuns.empty()) {
             std::cout << "***** 未完成順子 (" << partialRuns.size() << ") *****"
                       << std::endl;
-            for (auto run: partialRuns) {
-                std::cout << run;
-                std::cout << "======" << std::endl;
-            }
+            std::cout << partialRuns << std::endl;
+//            for (auto run: partialRuns) {
+//                std::cout << run;
+//                std::cout << "======" << std::endl;
+//            }
         }
 
         auto fullRuns = szm::Analysis::identifyFullRuns(
@@ -93,11 +94,14 @@ int main()
         if (!fullRuns.empty()) {
             std::cout << "***** 完成した順子 (" << fullRuns.size() << ") *****"
                       << std::endl;
-            for (auto run: fullRuns) {
-                std::cout << run;
-                std::cout << "======" << std::endl;
-            }
+            std::cout << fullRuns << std::endl;
+//            for (auto run: fullRuns) {
+//                std::cout << run;
+//                std::cout << "======" << std::endl;
+//            }
         }
+
+        std::cout << szm::localize<szm::Languages::Japanese>(szm::Tiles::Chars2) << " (#seen): " << table.getNumberSeen(nancha, szm::Tiles::Chars2) << std::endl;
     }
 
 //    {
